@@ -58,12 +58,13 @@ function buildCharts(sample) {
   // 2. Use d3.json to load and retrieve the samples.json file 
   d3.json("samples.json").then((data) => {
     // 3. Create a variable that holds the samples array. 
-
+    samplesArray = data.samplesArray;
     // 4. Create a variable that filters the samples for the object with the desired sample number.
-
+     
     //  5. Create a variable that holds the first sample in the array.
-
-
+    var resultArray = samplesArray.filter(sampleObj => sampleObj.id == sample);
+    var result = resultArray[0];
+    console.log(result);
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
 
 
