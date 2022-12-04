@@ -66,15 +66,17 @@ function buildCharts(sample) {
     //  5. Create a variable that holds the first sample in the array.
     var result = resultArray[0];
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
-    
-    var idArray = result.otu_ids.slice(0,10).reverse();
-    var ridArray = [];
-    var labelsArray = result.otu_labels.slice(0,10).reverse();
-    var valuesArray = result.sample_values.slice(0,10).reverse();
+    var idArray = result.otu_ids;
+    var labelsArray = result.otu_labels;
+    var valuesArray = result.sample_values;
+    var TopTenidArray = result.otu_ids.slice(0,10).reverse();
+    var TopTenridArray = [];
+    var TopTenlabelsArray = result.otu_labels.slice(0,10).reverse();
+    var TopTenvaluesArray = result.sample_values.slice(0,10).reverse();
     for(var i = 0; i < 10; i ++){
-        ridArray.push("OTU: " + idArray[i]);
+        TopTenridArray.push("OTU: " + TopTenidArray[i]);
     }
-    console.log(valuesArray)
+    console.log(TopTenvaluesArray)
     //console.log(labelsArray)
     // 7. Create the yticks for the bar chart.
     // Hint: Get the the top 10 otu_ids and map them in descending order  
@@ -84,9 +86,9 @@ function buildCharts(sample) {
     //console.log(yticks);
     // 8. Create the trace for the bar chart. 
     var barData = [{
-      x: valuesArray,
-      y: ridArray,
-      text: labelsArray,
+      x: TopTenvaluesArray,
+      y: TopTenridArray,
+      text: TopTenlabelsArray,
       type: "bar",
       orientation: 'h'
     }];
@@ -98,5 +100,33 @@ function buildCharts(sample) {
     };
     // 10. Use Plotly to plot the data with the layout. 
     Plotly.newPlot("bar", barData, barLayout)
+
+    // 1. Create the trace for the bubble chart.
+    // otu_ids = x-axis, marker colors
+    // sample values = y-axis, marker size
+    //otu labels = hover text
+    var bubbleData = [{
+      x: idArray,
+      y: valuesArray,
+      text: labelsArray,
+      mode: 'markers',
+      marker: {
+        color: idArray,
+        size: valuesArray
+      }
+    }];
+
+    // 2. Create the layout for the bubble chart.
+    var bubbleLayout = {
+      title: "Bubble chart",
+      showlegend: false
+    };
+
+    // 3. Use Plotly to plot the data with the layout.
+    Plotly.newPlot("bubble", bubbleData, bubbleLayout);
   });
+
+  
+  
+  
 }
